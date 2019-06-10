@@ -29,7 +29,8 @@ class Products extends StatelessWidget {
                         if (val) {
                           delProduct(index);
                         }
-                      }))
+                      })
+                    )
             ],
           )
           // Image.asset('assets/a.png'),
