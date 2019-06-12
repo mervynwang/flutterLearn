@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:testpro/pages/setting.dart';
-import './pages/auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import './pages/auth.dart';
 import './pages/home.dart';
 import './pages/setting.dart';
-import './pages/account.dart';
 import './pages/categorys.dart';
 import './pages/analytic.dart';
 
@@ -18,8 +16,27 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  SharedPreferences prefs;
+  
+  MyApp()  {
+    _initShare();
+  }
+
+  _initShare() async {
+    this.prefs = await SharedPreferences.getInstance();
+  }
+
+  _incrementCounter() async {
+    this.prefs = await SharedPreferences.getInstance();
+    int counter = this.prefs.getInt('counter') ?? 5;
+    print('Pressed $counter times.');
+    await this.prefs.setInt('counter', counter);
+  }
+
   @override
   Widget build(BuildContext context) {
+    _incrementCounter();
+
     return MaterialApp(
       // debugShowMaterialGrid: true,
       title: 'Flutter',
@@ -40,7 +57,6 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: (RouteSettings setting) {
         print(setting);
         print(setting.name);
-
       },
       onUnknownRoute: (RouteSettings setting) {
         print(setting);
@@ -49,3 +65,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
